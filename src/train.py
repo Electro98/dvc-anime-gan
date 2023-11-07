@@ -8,7 +8,7 @@ from tensorflow.keras import layers, Model
 from tqdm import tqdm
 
 IMAGE_SIZE = 64
-LATENT_SIZE = 128
+LATENT_SIZE = 1024
 BATCH_SIZE = 128
 EPOCHS = 35
 LR = 0.0002
@@ -17,25 +17,24 @@ LR = 0.0002
 def build_discriminator() -> Model:
     model = tf.keras.Sequential([
         layers.Input(shape=(IMAGE_SIZE, IMAGE_SIZE, 3)),
-        layers.Conv2D(64, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2D(64, (5, 5), strides=(2, 2), padding='same', use_bias=False),
+        layers.LeakyReLU(0.2),
+        
+        layers.Conv2D(128, (5, 5), strides=(2, 2), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
         
-        layers.Conv2D(128, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2D(256, (5, 5), strides=(2, 2), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
         
-        layers.Conv2D(256, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2D(512, (5, 5), strides=(2, 2), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
         
-        layers.Conv2D(512, (4, 4), strides=(2, 2), padding='same', use_bias=False),
-        layers.BatchNormalization(),
-        layers.LeakyReLU(0.2),
-        
-        layers.Conv2D(1, (4, 4), padding='valid', use_bias=False),
         layers.Flatten(),
-        layers.Activation('sigmoid')
+        layers.Dense(1, use_bias=False),
+        layers.Activation('sigmoid'),
     ])
     return model
 
@@ -43,25 +42,38 @@ def build_discriminator() -> Model:
 def build_generator() -> Model:
     model = tf.keras.Sequential([
         layers.Input(shape=(LATENT_SIZE,)),
-        layers.Reshape((1, 1, LATENT_SIZE)),
+
+        layers.Dense(4 * 4 * 256, use_bias=False),
+        layers.BatchNormalization(),
+        layers.LeakyReLU(0.2),
+
+        layers.Reshape((4, 4, 256)),
         
-        layers.Conv2DTranspose(512, (4, 4), strides=(1, 1), padding='valid', use_bias=False),
+        layers.Conv2DTranspose(256, (3, 3), strides=(2, 2), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         
-        layers.Conv2DTranspose(256, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2DTranspose(256, (3, 3), strides=(1, 1), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         
-        layers.Conv2DTranspose(128, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2DTranspose(256, (3, 3), strides=(2, 2), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         
-        layers.Conv2DTranspose(64, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2DTranspose(256, (3, 3), strides=(1, 1), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.ReLU(),
         
-        layers.Conv2DTranspose(3, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2DTranspose(128, (3, 3), strides=(2, 2), padding='same', use_bias=False),
+        layers.BatchNormalization(),
+        layers.ReLU(),
+        
+        layers.Conv2DTranspose(64, (3, 3), strides=(2, 2), padding='same', use_bias=False),
+        layers.BatchNormalization(),
+        layers.ReLU(),
+        
+        layers.Conv2DTranspose(3, (3, 3), strides=(1, 1), padding='same', use_bias=False),
         layers.Activation('tanh')
     ])
     return model
