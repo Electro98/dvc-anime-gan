@@ -1,0 +1,18 @@
+stages:
+  train:
+    cmd: pipenv run python src/train.py
+    deps:
+    - data/raw/first_batch
+    - src/train.py
+    outs:
+    - model/discriminator.h5
+    - model/generator.h5
+  evaluate:
+    cmd: pipenv run python src/evaluate.py
+    deps:
+    - model/discriminator.h5
+    - model/generator.h5
+    - src/evaluate.py
+    metrics:
+    - metrics/metrics.json:
+        cache: false
