@@ -1,0 +1,6 @@
+outs:
+- md5: b083d0574c98a9a1008e936901dc28a2.dir
+  size: 874460508
+  nfiles: 52261
+  hash: md5
+  path: first_batch
