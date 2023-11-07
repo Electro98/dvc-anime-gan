@@ -17,22 +17,26 @@ LR = 0.0002
 def build_discriminator() -> Model:
     model = tf.keras.Sequential([
         layers.Input(shape=(IMAGE_SIZE, IMAGE_SIZE, 3)),
+        layers.Conv2D(32, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.BatchNormalization(),
+        layers.LeakyReLU(0.2),
+        
         layers.Conv2D(64, (4, 4), strides=(2, 2), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
         
-        layers.Conv2D(128, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2D(128, (2, 2), strides=(1, 1), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
         
-        layers.Conv2D(256, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2D(256, (2, 2), strides=(1, 1), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
         
-        layers.Conv2D(512, (4, 4), strides=(2, 2), padding='same', use_bias=False),
+        layers.Conv2D(128, (1, 1), strides=(1, 1), padding='same', use_bias=False),
         layers.BatchNormalization(),
         layers.LeakyReLU(0.2),
-        
+         
         layers.Conv2D(1, (4, 4), padding='valid', use_bias=False),
         layers.Flatten(),
         layers.Activation('sigmoid')
