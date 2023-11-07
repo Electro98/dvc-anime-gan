@@ -1,0 +1,5 @@
+outs:
+- md5: c2de46c866b7c2ea5d79f1591723c879
+  size: 11114808
+  hash: md5
+  path: discriminator.h5
