@@ -5,9 +5,9 @@ stages:
     deps:
     - path: data/raw/first_batch
       hash: md5
-      md5: b083d0574c98a9a1008e936901dc28a2.dir
-      size: 874460508
-      nfiles: 52261
+      md5: efa5b1870775f03ec727bd221ef5ed80.dir
+      size: 1375177248
+      nfiles: 82219
     - path: src/train.py
       hash: md5
       md5: 5ae93a2fb83ab84230984e1c7e758a13
@@ -15,23 +15,41 @@ stages:
     outs:
     - path: model/discriminator.h5
       hash: md5
+<<<<<<< HEAD
       md5: 24d5fd7d8fd3117b1d9ded7430e7b654
       size: 997080
     - path: model/generator.h5
       hash: md5
       md5: c434e27cc35e1fdcde64d311191e9858
       size: 15275360
+=======
+      md5: cdaf81ae6cc72b573e45151bc32142af
+      size: 17309592
+    - path: model/generator.h5
+      hash: md5
+      md5: f256a8cf009c0b9ca3674c57003a3182
+      size: 27852696
+>>>>>>> master
   evaluate:
     cmd: pipenv run python src/evaluate.py
     deps:
     - path: model/discriminator.h5
       hash: md5
+<<<<<<< HEAD
       md5: 24d5fd7d8fd3117b1d9ded7430e7b654
       size: 997080
     - path: model/generator.h5
       hash: md5
       md5: c434e27cc35e1fdcde64d311191e9858
       size: 15275360
+=======
+      md5: cdaf81ae6cc72b573e45151bc32142af
+      size: 17309592
+    - path: model/generator.h5
+      hash: md5
+      md5: f256a8cf009c0b9ca3674c57003a3182
+      size: 27852696
+>>>>>>> master
     - path: src/evaluate.py
       hash: md5
       md5: a6e7b8d68e4f7711667b0b98079557d7
