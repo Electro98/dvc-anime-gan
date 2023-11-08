@@ -15,22 +15,22 @@ stages:
     outs:
     - path: model/discriminator.h5
       hash: md5
-      md5: cdaf81ae6cc72b573e45151bc32142af
+      md5: ca0bf45bcf5273d62478231772889f21
       size: 17309592
     - path: model/generator.h5
       hash: md5
-      md5: f256a8cf009c0b9ca3674c57003a3182
+      md5: 20ee2dcbe3c65514c93cab34618977d1
       size: 27852696
   evaluate:
     cmd: pipenv run python src/evaluate.py
     deps:
     - path: model/discriminator.h5
       hash: md5
-      md5: cdaf81ae6cc72b573e45151bc32142af
+      md5: ca0bf45bcf5273d62478231772889f21
       size: 17309592
     - path: model/generator.h5
       hash: md5
-      md5: f256a8cf009c0b9ca3674c57003a3182
+      md5: 20ee2dcbe3c65514c93cab34618977d1
       size: 27852696
     - path: src/evaluate.py
       hash: md5
@@ -39,5 +39,5 @@ stages:
     outs:
     - path: metrics/metrics.json
       hash: md5
-      md5: 897b8ddea7b558bf980e016df331290e
-      size: 229
+      md5: 8c85060206e6f455c9753eadfb23d52e
+      size: 230
